@@ -1,0 +1,77 @@
+@import '@fortawesome/fontawesome-free/css/all.min.css';
+
+
+.profile-container {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    background: #f8f9fa;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .profile-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .profile-details {
+    background: #ffffff;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .profile-details p {
+    margin: 10px 0;
+    font-size: 16px;
+  }
+  
+  .order-history, .addresses {
+    margin-top: 20px;
+  }
+  
+  .order-history h3, .addresses h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  
+  .order-history ul, .addresses ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .order-history li, .addresses li {
+    background: #f1f3f5;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 5px;
+  }
+  
+  .add-address {
+    margin-top: 15px;
+    display: flex;
+    gap: 10px;
+  }
+  
+  .add-address input {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+  
+  .add-address button {
+    padding: 8px 12px;
+    background: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .add-address button:hover {
+    background: #0056b3;
+  }
+  

@@ -1,0 +1,115 @@
+@import url('https://fonts.googleapis.com/css2?family=Poetsen+One&display=swap');
+
+.contact-page * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.contact-page {
+  font-family: "Poetsen One", sans-serif;
+}
+
+.contact-page .container {
+  background-image: url('./donutsbg.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+.contact-page .form {
+  max-width: 820px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 20px 1px rgba(0, 0, 0, 0.1);
+  opacity: 80%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  margin-top: 20px;
+}
+.contact-page .contact-info{
+    margin: 3rem;
+}
+.contact-info img{
+    width: 2rem;
+}
+.contact-page .contact-form {
+  background-color: #d05775;
+  padding: 2.3rem 2.2rem;
+  position: relative;
+  border-radius: 10px;
+}
+
+.contact-page .input-container {
+  position: relative;
+  margin: 1rem 0;
+}
+
+.contact-page .input {
+  width: 100%;
+  outline: none;
+  border: 2px solid #fafafa;
+  background: none;
+  padding: 0.6rem 1.2rem;
+  color: #fff;
+  border-radius: 25px;
+  transition: 0.3s;
+  font-size: 1rem;
+}
+
+.contact-page .input:focus {
+  border-color: #fff;
+}
+
+.contact-page .input-container label {
+  position: absolute;
+  top: 50%;
+  left: 1.2rem;
+  transform: translateY(-50%);
+  color: #fafafa;
+  font-size: 1rem;
+  transition: 0.3s ease-in-out;
+  pointer-events: none;
+}
+
+.contact-page .input:focus + label,
+.contact-page .input:not(:placeholder-shown) + label {
+  top: -10px;
+  left: 1rem;
+  font-size: 0.8rem;
+  color: #ffebcd;
+  background-color: #d05775;
+  padding: 0 5px;
+}
+
+.contact-page textarea.input {
+  min-height: 150px;
+  resize: none;
+}
+
+.contact-page .btn {
+  padding: 0.6rem 1.3rem;
+  background-color:#d05775 ;
+  color: #ffffff;
+  border:2px solid #d05775;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: 0.3s;
+  outline: none;
+}
+
+.contact-page .btn:hover {
+  background-color: transparent;
+  color:#d05775;
+  background-color: #ffffff;
+}
+
+.contact-page .social-icons a{
+    padding-left: 1.5rem;
+    color: #d05775;
+}
