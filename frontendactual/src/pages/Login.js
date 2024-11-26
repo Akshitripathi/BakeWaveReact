@@ -1,6 +1,6 @@
-import React, { useState, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import React, { useContext, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 
 const Login = () => {
@@ -11,45 +11,44 @@ const Login = () => {
   const [otpSent, setOtpSent] = useState(false);
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
-  
+
   const handleInputChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
   const handleOtpChange = (e) => setOtp(e.target.value);
 
   const handleSendOtp = async () => {
     try {
-      const response = await axios.post(`http://localhost:4000/api/${formData.role}/login`, formData); // Dynamically choose endpoint
+      const response = await axios.post(`http://localhost:4000/api/${formData.role}/login`, formData);
       setMessage(response.data.message);
       setOtpSent(true);
     } catch (error) {
-      setError('Failed to send OTP. Please try again.');
+      setError(error.response?.data?.message || 'Failed to send OTP. Please try again.');
     }
   };
 
   const handleVerifyOtp = async () => {
     try {
-        const response = await axios.post(
-            `http://localhost:4000/api/${formData.role}/verify${formData.role}Login`,
-            { email: formData.email, otp }
-        );
-        console.log("Full Response Data:", response.data); // Debugging log
+      const response = await axios.post(
+        `http://localhost:4000/api/${formData.role}/verify${formData.role}Login`,
+        { email: formData.email, otp },
+        { withCredentials: true }
+      );
+      console.log(response.data);
+      const token = response.data.token;
+      const userData = response.data.admin || response.data.user;
+      console.log(userData);
+      login(token, userData);
 
-        // Check if token exists and role is admin
-        if (response.data.token && response.data.admin && response.data.admin.role === 'admin') {
-            console.log("Navigating to admin dashboard");
-            localStorage.setItem('token', response.data.token);
-            login(response.data.token, response.data.admin);
-
-            navigate('/admin');
+      setTimeout(() => {
+        if (userData.role === 'admin') {
+          navigate('/admin');
         } else {
-            console.log("Navigating to user dashboard");
-            navigate('/');
+          navigate('/');
         }
+      }, 100); // Add a small delay
     } catch (error) {
-        setError('Invalid OTP. Please try again.');
+      setError(error.response?.data?.message || 'Invalid OTP. Please try again.');
     }
-};
-
-  
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -119,7 +118,8 @@ const Login = () => {
           )}
           <div className="link">
             <p>
-              Don't have an account? <a onClick={() => navigate('/signup')}>Sign Up</a>
+              Don't have an account?{' '}
+              <a onClick={() => navigate('/signup')}>Sign Up</a>
             </p>
           </div>
         </form>
