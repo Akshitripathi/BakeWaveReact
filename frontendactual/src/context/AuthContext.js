@@ -10,15 +10,18 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const checkAuthStatus = async () => {
       const token = localStorage.getItem('token');
+      console.log('Token at start of checkAuthStatus:', token); // Debugging
       if (token) {
         try {
           const response = await axios.get('http://localhost:4000/api/auth/status', {
-            headers: { Authorization: `Bearer ${token}` }, 
+            headers: { Authorization: `Bearer ${token}` },
           });
+          console.log('Auth status response:', response.data); // Debugging
           if (response.data.isLoggedIn) {
             setUser(response.data.user);
             setIsLoggedIn(true);
           } else {
+            console.log('Token invalid, logging out.'); // Debugging
             logout();
           }
         } catch (error) {
@@ -26,11 +29,13 @@ export const AuthProvider = ({ children }) => {
           logout();
         }
       } else {
+        console.log('No token found, logging out.'); // Debugging
         logout();
       }
     };
     checkAuthStatus();
   }, []);
+  
   
 
   const login = (token, userData) => {
