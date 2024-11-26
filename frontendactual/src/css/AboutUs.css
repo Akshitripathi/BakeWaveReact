@@ -45,6 +45,13 @@ body {
     cursor: pointer;
   }
   
+  .heading{
+    font-family: "Tangerine", cursive;
+    font-weight: 900;
+    font-style: normal;
+    font-size: 6em;
+  }
+
   #header {
     position: relative;
     text-align: center;
