@@ -3,9 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import '../css/Home.css';
 import Navbar from './Navbar.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faBagShopping, faClock, faMapMarkerAlt, faEnvelope, faPhone } from '@fortawesome/free-solid-svg-icons';
-import products from '../productData.js'; // Assuming you've moved the product list to a separate file `productData.js`
-const videos = [
+import {  faClock, faMapMarkerAlt, faEnvelope, faPhone } from '@fortawesome/free-solid-svg-icons';
+import products from '../productData.js'; const videos = [
     {
       id: 1,
       videoSrc: "./img/cake_video.mp4",
@@ -75,7 +74,7 @@ export default function Home() {
 <Navbar/>
       <div className="main">
         <div className="left">
-          <h3>Welcome to BakeWave</h3>
+          <h1>Welcome to BakeWave</h1>
           <p>Where every bite is a piece of heaven!!</p>
           <p>Come and experience the magic of freshly baked goods made with love and the finest ingredients</p>
         </div>
@@ -116,13 +115,13 @@ export default function Home() {
         onClick={handleClick}
         style={{
           textDecoration: 'none',
-          fontSize: '40px',
+          fontSize: '25px',
           fontFamily: 'Dancing Script',
           fontWeight: 'bolder',
           color: 'black',
         }}
       >
-        <p style={{ marginLeft: '25rem', marginTop: '1.2rem' }}> ~ Explore More ~</p>
+        <p style={{marginLeft:'42%',marginRight:'40%', justifyItems: 'center', marginTop: '1.2rem' }}> ~ Explore More ~</p>
       </a>
     </div>
 
@@ -158,26 +157,23 @@ export default function Home() {
       </section>
 
       <footer className="footer">
-  <div className="footer-container">
-    {/* About Us Section */}
+       <div className="footer-container">
+    
     <FooterSection
       title="About Us"
       items={["Fresh Food", "Quality", "Affordable", "Offers"]}
     />
     
-    {/* Top Dishes Section */}
     <FooterSection
       title="Top Dishes"
       items={["Cakes", "Donuts", "Brownie", "Ice-Cream"]}
     />
     
-    {/* Offers Section */}
     <FooterSection
       title="Offer"
       items={["50% OFF", "Bulk Order", "Coupons", "Exclusive Deals"]}
     />
     
-    {/* Social Media Section */}
     <div className="footer-section social-media">
       <h2>Connect With Us</h2>
       <div className="social-icons">
@@ -196,7 +192,6 @@ export default function Home() {
       </div>
     </div>
     
-    {/* Newsletter Section */}
     <div className="footer-section newsletter">
       <h2>Subscribe to Our Newsletter</h2>
       <p>Get the latest updates and offers delivered to your inbox.</p>
@@ -210,11 +205,11 @@ export default function Home() {
         <button type="submit" className="newsletter-button">Subscribe</button>
       </form>
     </div>
-  </div>
+        </div>
 
-  <div className="footer-bottom">
-    <p>&copy; 2024 BakeWave. All rights reserved.</p>
-  </div>
+        <div className="footer-bottom">
+          <p>&copy; 2024 BakeWave. All rights reserved.</p>
+          </div>
       </footer>
 
     </div>
