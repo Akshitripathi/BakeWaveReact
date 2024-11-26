@@ -15,15 +15,30 @@ const adminSchema = new mongoose.Schema({
 });
 
 // Hash password before saving
+
+// Hash password before saving
 adminSchema.pre('save', async function (next) {
+  // Only hash the password if it's new or modified
   if (!this.isModified('password')) return next();
-  this.password = await bcrypt.hash(this.password, 10);
-  next();
+
+  try {
+    const salt = await bcrypt.genSalt(10); // Generate salt
+    this.password = await bcrypt.hash(this.password, salt); // Hash password
+    next();
+  } catch (error) {
+    next(error); // Pass error to middleware
+  }
 });
 
 // Compare passwords
-adminSchema.methods.comparePassword = function (candidatePassword) {
-  return bcrypt.compare(candidatePassword, this.password);
+adminSchema.methods.comparePassword = async function (inputPassword) {
+  console.log('Input Password:', inputPassword);
+  console.log('Stored Hashed Password:', this.password);
+
+  const isMatch = await bcrypt.compare(inputPassword, this.password);
+  console.log('Password Match:', isMatch);
+
+  return isMatch;
 };
 
 module.exports = mongoose.model('Admin', adminSchema);
