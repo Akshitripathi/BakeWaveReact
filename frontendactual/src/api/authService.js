@@ -1,26 +1,21 @@
-import axios from 'axios';
-
-// Set up the base URL
-const API_URL = "http://localhost:5000/api/auth";
-
-// Signup function
-export const signup = async (userData) => {
-  try {
-    const response = await axios.post(`${API_URL}/signup`, userData);
-    return response.data;
-  } catch (error) {
-    console.error("Error signing up:", error);
-    throw error.response.data;
-  }
+export const createOrder = async (orderData, token) => {
+    const response = await fetch('http://localhost:4000/api/orders', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(orderData),
+    });
+    return response.json();
 };
 
-// Login function
-export const login = async (userData) => {
-  try {
-    const response = await axios.post(`${API_URL}/login`, userData);
-    return response.data;
-  } catch (error) {
-    console.error("Error logging in:", error);
-    throw error.response.data;
-  }
+export const getOrders = async (token) => {
+    const response = await fetch('http://localhost:4000/api/orders', {
+        method: 'GET',
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+    return response.json();
 };
