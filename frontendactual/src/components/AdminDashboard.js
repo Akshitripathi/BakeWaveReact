@@ -1,30 +1,27 @@
-import React from 'react';
-import { useAuth } from '../context/AuthContext';
+import AppFooter from './admins/Components/AppFooter';
+import AppHeader from './admins/Components/AppHeader';
+import PageContent from './admins/Components/PageContent';
+import SideMenu from './admins/Components/SideMenu';
+import './Dashboard.css';
+
 
 const AdminDashboard = () => {
-  const { logout } = useAuth(); 
-  const handleLogout = () => {
-    logout(); 
-  };
+  // const { logout } = useAuth(); // Access logout from the AuthContext
+  console.log("You have reached admin apanel");
 
   return (
-    <div>
-      <h1>Welcome to the Admin Dashboard!</h1>
-      <button onClick={handleLogout} style={logoutButtonStyle}>
-        Logout
-      </button>
+    <div className="App">
+      <AppHeader />
+     <div className="SideMenuAndPageContent">
+        <SideMenu></SideMenu>
+        <PageContent></PageContent>
+       </div>
+       <AppFooter />
+      {/* <h1>Hello</h1> */}
     </div>
   );
 };
-const logoutButtonStyle = {
-  backgroundColor: '#ff4d4d',
-  color: '#fff',
-  border: 'none',
-  padding: '10px 15px',
-  cursor: 'pointer',
-  fontSize: '16px',
-  borderRadius: '5px',
-  marginTop: '20px',
-};
+
+
 
 export default AdminDashboard;
