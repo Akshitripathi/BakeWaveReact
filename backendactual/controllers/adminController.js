@@ -1,10 +1,15 @@
 require('dotenv').config();
 const Admin = require('../models/Admin');
 const jwt = require('jsonwebtoken');
-const twilio = require('twilio');
-
-const client = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
-
+const bcrypt= require('bcryptjs');
+const nodemailer = require('nodemailer');
+const transporter = nodemailer.createTransport({
+  service: process.env.EMAIL_SERVICE, // e.g., 'gmail'
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS,
+  },
+});
 const generateOTP = () => Math.floor(100000 + Math.random() * 900000); // 6-digit OTP
 
 const otpStore = {};
@@ -19,20 +24,22 @@ exports.adminSignup = async (req, res) => {
     if (existingAdmin) {
       return res.status(400).json({ message: 'Admin with this email, phone, or username already exists' });
     }
+    
 
-    // Generate and store OTP
-    const otp = generateOTP();
-    otpStore[phone] = otp;
-
-    // Send OTP via SMS
-    const message = `Your OTP for verification is: ${otp}`;
-    await client.messages.create({
-      body: message,
-      from:'+12513104706', // Ensure this is configured correctly
-      to: phone,
+    const newAdmin = new Admin({
+      username,
+      email,
+      password,
+      firstName,
+      lastName,
+      phone,
+      
     });
 
-    res.status(200).json({ message: 'OTP sent to your phone number. Verify to complete signup.' });
+    await newAdmin.save();
+    
+
+    res.status(200).json({ message: 'Signup succesful' });
   } catch (error) {
     console.error('Admin signup error:', error);
     res.status(500).json({ message: 'Server error. Please try again later.' });
@@ -40,54 +47,37 @@ exports.adminSignup = async (req, res) => {
 };
 
 
-// Verify OTP and Complete Signup
-exports.verifyAdminSignup = async (req, res) => {
-  const { username, email, phone, password, firstName, lastName, otp } = req.body;
-
-  try {
-    // Check OTP validity
-    if (otpStore[phone] !== parseInt(otp, 10)) {
-      return res.status(400).json({ message: 'Invalid or expired OTP.' });
-    }
-
-    // Create new admin
-    const newAdmin = new Admin({ username, email, phone, password, firstName, lastName });
-    await newAdmin.save();
-
-    // Remove OTP after successful signup
-    delete otpStore[phone];
-
-    res.status(201).json({ message: 'Admin registered successfully.' });
-  } catch (error) {
-    console.error('Admin OTP verification error:', error);
-    res.status(500).json({ message: 'Server error. Please try again later.' });
-  }
-};
-
 // Admin Login
 exports.adminLogin = async (req, res) => {
   const { email, password} = req.body;
 
   try {
     const admin = await Admin.findOne({ email });
-    if (!admin || !(await admin.comparePassword(password))) {
-      return res.status(401).json({ message: 'Invalid email or password' });
+    if (!admin) {
+      return res.status(401).json({ message: 'Invalid email' });
     }
+    
+    const isPasswordValid = await admin.comparePassword(password);
+    if (!isPasswordValid) {
+      return res.status(401).json({ message: 'Invalid password' });
+    }
+    
 
     // Generate OTP and store it
     const otp = generateOTP();
     otpStore[email] = otp;
 
-    // Send OTP via SMS
-    const message = `Your OTP for admin login is: ${otp}`;
-    await client.messages.create({
-      body: message,
-      from: '+12513104706',
-      to: admin.phone,
-    });
+    const mailOptions = {
+      from: process.env.EMAIL_USER,
+      to: email,
+      subject: 'Admin Login OTP',
+      text: `Your OTP for admin login is: ${otp}. It will expire in 5 minutes.`,
+    };
+
+    await transporter.sendMail(mailOptions);
     
 
-    res.status(200).json({ message: 'OTP sent to your phone number. Verify to complete login.' });
+    res.status(200).json({ message: 'OTP sent to your mail. Verify to complete login.' });
   } catch (error) {
     console.error('Admin login error:', error);
     res.status(500).json({ message: 'Server error. Please try again later.' });
