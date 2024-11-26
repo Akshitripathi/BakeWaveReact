@@ -20,6 +20,7 @@ function Profile() {
       // Fetch user data
       axios
         .get('http://localhost:4000/api/profile', {
+          withCredentials:true,
           headers: { Authorization: `Bearer ${token}` },
         })
         .then((response) => {
@@ -33,8 +34,9 @@ function Profile() {
 
       // Fetch order history
       axios
-        .get('http://localhost:4000/api/orders', {  // Adjusted endpoint to fetch all orders
-          headers: { Authorization: `Bearer ${token}` },
+        .get('http://localhost:4000/api/orders', {  
+          withCredentials:true,
+           headers: { Authorization: `Bearer ${token}` },
         })
         .then((response) => {
           setOrderHistory(response.data.orders || []); // Update order history
