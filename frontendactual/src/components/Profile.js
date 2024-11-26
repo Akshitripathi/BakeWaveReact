@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../css/profile.css';
+import '../css/Navbar.css';
 import Navbar from './Navbar';
 
 function Profile() {
@@ -17,29 +18,28 @@ function Profile() {
     if (!token) {
       navigate('/login');
     } else {
-      // Fetch user data
+      
       axios
         .get('http://localhost:4000/api/profile', {
           withCredentials:true,
           headers: { Authorization: `Bearer ${token}` },
         })
         .then((response) => {
-          setUserData(response.data.user); // Set user data
-          setAddresses(response.data.addresses || []); // Update addresses
+          setUserData(response.data.user); 
+          setAddresses(response.data.addresses || []); 
         })
         .catch((error) => {
           setError('Failed to fetch profile');
           console.error('Profile fetch error:', error.response?.data || error.message);
         });
 
-      // Fetch order history
       axios
         .get('http://localhost:4000/api/orders', {  
           withCredentials:true,
            headers: { Authorization: `Bearer ${token}` },
         })
         .then((response) => {
-          setOrderHistory(response.data.orders || []); // Update order history
+          setOrderHistory(response.data.orders || []); 
         })
         .catch((error) => {
           setError('Failed to fetch order history');
@@ -62,8 +62,8 @@ function Profile() {
           }
         )
         .then((response) => {
-          setAddresses(response.data.addresses || []); // Update addresses from server response
-          setNewAddress(''); // Clear input field
+          setAddresses(response.data.addresses || []);
+          setNewAddress(''); 
         })
         .catch((error) => console.error('Error adding address:', error));
     }
@@ -81,7 +81,7 @@ function Profile() {
           <p><strong>Phone:</strong> {userData.phone}</p>
 
           <div className="order-history">
-            <h3>Order History</h3>
+            <h3>Order Placed: </h3>
             {orderHistory.length > 0 ? (
               <ul>
                 {orderHistory.map((order) => (
