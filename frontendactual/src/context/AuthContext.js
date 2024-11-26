@@ -1,52 +1,48 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
-import { jwtDecode } from 'jwt-decode'; // Correct import for jwt-decode
+import axios from 'axios';
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [user, setUser] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // State to manage login status
+  const [user, setUser] = useState(null); // State to store user data
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    const storedUser = localStorage.getItem('user');
-
-    if (token && storedUser) {
-      try {
-        const decodedToken = jwtDecode(token);
-        const currentTime = Date.now() / 1000;
-
-        if (decodedToken.exp > currentTime) {
-          setIsLoggedIn(true);
-          setUser({
-            ...JSON.parse(storedUser),
-            isAdmin: JSON.parse(storedUser).role === 'admin', // Add isAdmin flag
+    const checkAuthStatus = async () => {
+      const token = localStorage.getItem('token'); // Check for token in localStorage
+      if (token) {
+        try {
+          const response = await axios.get('http://localhost:4000/api/auth/status', {
+            headers: { Authorization: `Bearer ${token}` }, // Validate the token
           });
-        } else {
+          if (response.data.isLoggedIn) {
+            setUser(response.data.user);
+            setIsLoggedIn(true);
+          } else {
+            logout(); // Clear state and localStorage on failure
+          }
+        } catch (error) {
+          console.error('Error during auth status check:', error);
           logout();
         }
-      } catch (error) {
-        console.error("Error parsing token or user data from localStorage:", error);
+      } else {
         logout();
       }
-    }
+    };
+    checkAuthStatus();
   }, []);
+  
 
   const login = (token, userData) => {
     localStorage.setItem('token', token);
-    localStorage.setItem('user', JSON.stringify(userData));
-    setIsLoggedIn(true);
-    setUser({
-      ...userData,
-      isAdmin: userData.role === 'admin', // Add isAdmin flag
-    });
+    setUser(userData);
+    setIsLoggedIn(true); // Set login state to true on successful login
   };
 
   const logout = () => {
     localStorage.removeItem('token');
-    localStorage.removeItem('user');
-    setIsLoggedIn(false);
     setUser(null);
+    setIsLoggedIn(false); // Set login state to false on logout
   };
 
   return (
