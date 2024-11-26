@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useCart } from '../context/CartContext'; // Import useCart
+import { useCart } from '../context/CartContext'; 
 import axios from 'axios';
 
 function OrderConfirmation() {
     const location = useLocation();
     const navigate = useNavigate();
-    const { cartItems } = useCart(); // Access cartItems from CartContext
+    const { cartItems } = useCart(); 
     const { orderDetails } = location.state || { items: [], total: 0 };
     const [calculatedTotal, setCalculatedTotal] = useState(0);
 
@@ -23,11 +23,11 @@ function OrderConfirmation() {
     const handleConfirmOrder = async () => {
         const token = localStorage.getItem('token');
     
-            if (!token) {
-                alert('User is not authenticated. Please log in.');
-                navigate('/login');
-                return;
-            }
+        if (!token) {
+            alert('User is not authenticated. Please log in.');
+            navigate('/login');
+            return;
+        }
 
         if (!orderDetails.items || orderDetails.items.length === 0) {
             alert('No items to confirm. Please add items to the cart.');
@@ -46,27 +46,24 @@ function OrderConfirmation() {
         };
     
         try {
-            // Retrieve token from localStorage or any other storage
-            
-    
             const response = await axios.post(
                 'http://localhost:4000/api/orders',
                 payload,
-                {   withCredentials:true,
+                {   
+                    withCredentials: true,
                     headers: {
-                        Authorization: `Bearer ${token}`, // Include token in the Authorization header
+                        Authorization: `Bearer ${token}`, 
                     },
                 }
             );
     
             console.log('Order Response:', response.data);
-            navigate('/'); // Redirect to success page
+            navigate('/'); 
         } catch (error) {
             console.error('Order Error:', error.response?.data || error);
             alert('Failed to place the order. Please try again.');
         }
     };
-    
 
     if (!orderDetails || orderDetails.items.length === 0) {
         return <p>No items in the order. Please add items to the cart and try again.</p>;
@@ -113,8 +110,11 @@ const styles = {
         fontFamily: 'Arial, sans-serif',
     },
     heading: {
+        fontFamily: '"Tangerine", cursive', 
+        fontWeight: '700',
+        fontStyle: 'normal',
         textAlign: 'center',
-        fontSize: '1.8em',
+        fontSize: '4em',
         color: '#333',
         marginBottom: '20px',
     },
@@ -178,7 +178,7 @@ const styles = {
         width: '100%',
         padding: '12px',
         marginTop: '20px',
-        backgroundColor: '#e04f75',
+        backgroundColor: '#F7418F',
         color: '#fff',
         border: 'none',
         borderRadius: '6px',
@@ -186,7 +186,7 @@ const styles = {
         fontSize: '1.1em',
         fontWeight: 'bold',
         transition: 'background-color 0.3s ease',
-    },
+    }
 };
 
 export default OrderConfirmation;
