@@ -4,7 +4,7 @@ import { useCart } from '../context/CartContext';
 import '../css/style.css';
 
 const Checkout = () => {
-    const { cartItems, setCartItems } = useCart(); 
+    const { cartItems, setCartItems } = useCart();  
     const navigate = useNavigate();
 
     const calculateTotal = () => {
@@ -19,13 +19,12 @@ const Checkout = () => {
             total: calculateTotal(),
         };
 
-        // Save order to localStorage for profile page display
         const existingOrders = JSON.parse(localStorage.getItem('orderHistory')) || [];
         localStorage.setItem('orderHistory', JSON.stringify([...existingOrders, orderDetails]));
 
-        setCartItems([]); // Clear the cart
-        localStorage.removeItem('cartItems'); // Remove cart items from localStorage
-        navigate('/order-confirmation', { state: { orderDetails } }); // Navigate with order details
+        setCartItems([]); 
+        localStorage.removeItem('cartItems'); 
+        navigate('/order-confirmation', { state: { orderDetails } });
     };
 
     if (cartItems.length === 0) {
@@ -60,7 +59,7 @@ const Checkout = () => {
                 ))}
             </div>
             <div className="checkout-total">
-                <h2>Total Amount: ₹{calculateTotal()}</h2>
+                <h4>Total Amount: ₹{calculateTotal()}</h4>
             </div>
             <form onSubmit={handlePlaceOrder} className="checkout-form">
                 <h3>Billing Details</h3>
