@@ -52,7 +52,7 @@ function OrderConfirmation() {
             const response = await axios.post(
                 'http://localhost:4000/api/orders',
                 payload,
-                {
+                {   withCredentials:true,
                     headers: {
                         Authorization: `Bearer ${token}`, // Include token in the Authorization header
                     },
