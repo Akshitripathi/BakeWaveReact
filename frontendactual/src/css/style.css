@@ -1,10 +1,13 @@
-@import '@fortawesome/fontawesome-free/css/all.min.css';
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Arial, sans-serif;
+@import url('https://fonts.googleapis.com/css2?family=Delius&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Delius&family=Tangerine:wght@400;700&display=swap');
+
+
+
+*{
+  font-family: "Delius", cursive;
+  font-weight: 400;
 }
 
 body {
@@ -72,7 +75,10 @@ nav ul li a:hover {
 }
 
 .foodMenu h1 {
-    font-size: 2em;
+    font-family: "Tangerine", cursive;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 4em;
     margin-bottom: 20px;
 }
 
@@ -85,8 +91,9 @@ nav ul li a:hover {
 
 .categories .cat {
     padding: 8px 15px;
-    background-color: #333;
+    background-color: #F7418F;
     color: #fff;
+    font-weight: bolder;
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -94,7 +101,7 @@ nav ul li a:hover {
 }
 
 .categories .cat:hover {
-    background-color: #555;
+    background-color: #FC819E;
 }
 
 .foodCard {
@@ -129,7 +136,7 @@ nav ul li a:hover {
 
 .card button {
     padding: 8px 12px;
-    background-color: #333;
+    background-color: #F7418F;
     color: #fff;
     border: none;
     border-radius: 5px;
@@ -138,7 +145,7 @@ nav ul li a:hover {
 }
 
 .card button:hover {
-    background-color: #555;
+    background-color: #FC819E;
 }
 
 .card:hover {
@@ -214,13 +221,13 @@ nav ul li a:hover {
 .quantity-controls {
     display: flex;
     align-items: center;
-    gap: 5px;
-    margin-top: -18px;
+    gap: 10px;
+    margin-top: -15px;
 }
 
 .quantity-controls button {
-    background-color: #333;
-    color: #fff;
+    background-color: #FFF3C7;
+    color: #F7418F;
     border: none;
     border-radius: 5px;
     padding: 5px;
@@ -229,7 +236,8 @@ nav ul li a:hover {
 }
 
 .quantity-controls button:hover {
-    background-color: #555;
+    background-color: #FC819E;
+    color: #FFF3C7;
 }
 
 .totalCart {
@@ -301,7 +309,10 @@ nav ul li a:hover {
 }
 
 .checkout h1 {
-    font-size: 2.5em;
+    font-family: "Tangerine", cursive;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 4em;
     margin-bottom: 25px;
     text-align: center;
     color: #333;
@@ -365,7 +376,7 @@ nav ul li a:hover {
     padding: 12px;
     font-size: 1.1em;
     border-radius: 5px;
-    border: 1px solid #ddd;
+    border: 1px solid #F7418F;
 }
 
 .checkout-form input {
@@ -374,14 +385,14 @@ nav ul li a:hover {
 }
 
 .submit-btn {
-    background-color: #333;
+    background-color: #F7418F;
     color: #fff;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
 .submit-btn:hover {
-    background-color: #555;
+    background-color: #FC819E;
 }
 
 @media (max-width: 768px) {
@@ -404,8 +415,6 @@ nav ul li a:hover {
     }
 }
 
-
-/* Order Confirmation Page Styles */
 .order-confirmation {
     padding: 20px;
     max-width: 800px;
