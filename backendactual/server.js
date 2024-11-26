@@ -1,6 +1,7 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
 const productRoutes = require('./routes/productRoutes');
 const profileRoutes = require('./routes/profileRoutes'); 
 const authRoutes= require ('./routes/authRoutes');
@@ -12,11 +13,12 @@ const app = express();
 
 db();
 app.use(express.json());
+app.use(cookieParser());
 app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
 app.use('/uploads', express.static('uploads'));
 
 // Auth routes
-app.use('/api/user',authRoutes);
+app.use('/api',authRoutes);
 
 // Profile routes
 app.use('/api', profileRoutes); 
