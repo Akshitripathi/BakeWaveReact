@@ -1,10 +1,10 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useCart } from '../context/CartContext'; // Import useCart
+import { useCart } from '../context/CartContext'; 
 import '../css/style.css';
 
 const Checkout = () => {
-    const { cartItems, setCartItems } = useCart(); // Access cartItems and setCartItems from CartContext
+    const { cartItems, setCartItems } = useCart(); 
     const navigate = useNavigate();
 
     const calculateTotal = () => {
