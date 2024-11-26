@@ -9,14 +9,14 @@ import { useCart } from '../context/CartContext';
 export default function FoodMenu() {
     const [products, setProducts] = useState([]);
     const [category, setCategory] = useState('all');
-    const { addToCart } = useCart(); // Get addToCart from context
+    const { addToCart } = useCart(); 
 
     useEffect(() => {
         const fetchProducts = async () => {
             try {
                 const response = await axios.get('http://localhost:4000/api/products');
                 console.log(response);
-                setProducts(response.data); // Store all products in the state
+                setProducts(response.data); 
             } catch (error) {
                 console.error('Error fetching products:', error);
             }
@@ -24,14 +24,13 @@ export default function FoodMenu() {
         fetchProducts();
     }, []);
     
-    // Filter products based on the selected category
     const filteredProducts = category === 'all' 
         ? products 
         : products.filter(product => product.category.toLowerCase() === category);
 
     return (
         <div className="foodMenu">
-            <Navbar /> {/* Navbar will show cart count */}
+            <Navbar /> 
             <h1>Menu</h1>
             <div className="categories">
                 {['all', 'Special', 'Pâtisserie', 'Gâteaux', 'Tartes', 'Viennoiseries', 'Others'].map(cat => (
@@ -49,14 +48,66 @@ export default function FoodMenu() {
                 {filteredProducts.map(product => (
                     <FoodCard 
                         key={product.product_id} 
-                        product={product} // Pass the entire product object to FoodCard
+                        product={product} 
                         addToCart={addToCart} 
                     />
                 ))}
             </div>
 
             <footer className="footer">
-                {/* Footer content */}
+            <div className="footer-container">
+    
+    <FooterSection
+      title="About Us"
+      items={["Fresh Food", "Quality", "Affordable", "Offers"]}
+    />
+    
+    <FooterSection
+      title="Top Dishes"
+      items={["Cakes", "Donuts", "Brownie", "Ice-Cream"]}
+    />
+    
+    <FooterSection
+      title="Offer"
+      items={["50% OFF", "Bulk Order", "Coupons", "Exclusive Deals"]}
+    />
+    
+    <div className="footer-section social-media">
+      <h2>Connect With Us</h2>
+      <div className="social-icons">
+        <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
+          <i className="fab fa-twitter"></i>
+        </a>
+        <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
+          <i className="fab fa-facebook-f"></i>
+        </a>
+        <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
+          <i className="fab fa-linkedin-in"></i>
+        </a>
+        <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
+          <i className="fab fa-instagram"></i>
+        </a>
+      </div>
+    </div>
+    
+    <div className="footer-section newsletter">
+      <h2>Subscribe to Our Newsletter</h2>
+      <p>Get the latest updates and offers delivered to your inbox.</p>
+      <form className="newsletter-form">
+        <input
+          type="email"
+          placeholder="Enter your email"
+          className="newsletter-input"
+          required
+        />
+        <button type="submit" className="newsletter-button">Subscribe</button>
+      </form>
+    </div>
+        </div>
+
+        <div className="footer-bottom">
+          <p>&copy; 2024 BakeWave. All rights reserved.</p>
+          </div>
             </footer>
         </div>
     );
