@@ -5,17 +5,9 @@ const authMiddleware = (requiredRoles = []) => async (req, res, next) => {
   try {
     console.log('Auth Middleware: Start');
 
-    // Extract Authorization header
-    const authHeader = req.headers['authorization'];
-    if (!authHeader) {
-      console.log('Authorization header missing');
-      return res.status(401).json({ message: 'Access token is required' });
-    }
-
-    // Extract token from Authorization header
-    const token = authHeader.split(' ')[1];
+    const token = req.cookies.authToken;
     if (!token) {
-      console.log('Token missing in Authorization header');
+      console.log('AuthToken cookie missing');
       return res.status(401).json({ message: 'Access token is required' });
     }
 
