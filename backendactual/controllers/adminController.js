@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt= require('bcryptjs');
 const nodemailer = require('nodemailer');
 const transporter = nodemailer.createTransport({
-  service: process.env.EMAIL_SERVICE, // e.g., 'gmail'
+  service: process.env.EMAIL_SERVICE, 
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS,
@@ -14,12 +14,10 @@ const generateOTP = () => Math.floor(100000 + Math.random() * 900000); // 6-digi
 
 const otpStore = {};
 
-// Admin Signup
 exports.adminSignup = async (req, res) => {
   const { username, email, phone, password, firstName, lastName } = req.body;
 
   try {
-    // Check if admin already exists
     const existingAdmin = await Admin.findOne({ $or: [{ email }, { phone }, { username }] });
     if (existingAdmin) {
       return res.status(400).json({ message: 'Admin with this email, phone, or username already exists' });
@@ -47,7 +45,6 @@ exports.adminSignup = async (req, res) => {
 };
 
 
-// Admin Login
 exports.adminLogin = async (req, res) => {
   const { email, password} = req.body;
 
@@ -63,7 +60,6 @@ exports.adminLogin = async (req, res) => {
     }
     
 
-    // Generate OTP and store it
     const otp = generateOTP();
     otpStore[email] = otp;
 
@@ -84,12 +80,10 @@ exports.adminLogin = async (req, res) => {
   }
 };
 
-// Verify OTP and Complete Login
 exports.verifyAdminLogin = async (req, res) => {
   const { email, otp } = req.body;
 
   try {
-    // Check OTP validity
     if (otpStore[email] !== parseInt(otp, 10)) {
       return res.status(400).json({ message: 'Invalid or expired OTP.' });
     }
@@ -97,14 +91,11 @@ exports.verifyAdminLogin = async (req, res) => {
     const admin = await Admin.findOne({ email });
     if (!admin) return res.status(404).json({ message: 'Admin not found.' });
 
-    // Generate JWT token
     const token = jwt.sign(
       { id: admin._id, role: admin.role },
       process.env.JWT_SECRET,
       { expiresIn: '3h' }
     );
-
-    // Remove OTP after successful login
     delete otpStore[email];
 
     res.status(200).json({ token, admin });
@@ -114,12 +105,11 @@ exports.verifyAdminLogin = async (req, res) => {
   }
 };
 
-// Fetch All Users
 exports.getAllUsers = async (req, res) => {
-  const User = require('../models/User'); // Import User schema dynamically
+  const User = require('../models/User'); 
 
   try {
-    const users = await User.find({}, '-password'); // Exclude passwords
+    const users = await User.find({}, '-password'); 
     res.status(200).json({ users });
   } catch (error) {
     console.error('Error fetching users:', error);
@@ -127,9 +117,8 @@ exports.getAllUsers = async (req, res) => {
   }
 };
 
-// Delete a User
 exports.deleteUser = async (req, res) => {
-  const User = require('../models/User'); // Import User schema dynamically
+  const User = require('../models/User'); 
   const { userId } = req.params;
 
   try {
