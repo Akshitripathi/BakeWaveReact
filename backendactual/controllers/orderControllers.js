@@ -1,6 +1,5 @@
 const Order = require('../models/order');
 
-// Function to create an order
 exports.createOrder = async (req, res) => {
     try {
         const { items, totalAmount } = req.body;
@@ -8,8 +7,6 @@ exports.createOrder = async (req, res) => {
         if (!items || !Array.isArray(items) || items.length === 0) {
             return res.status(400).json({ message: 'Items are required' });
         }
-
-        // Validate each item
         for (const item of items) {
             if (!item.productId || !item.name || !item.price || !item.quantity || !item.image) {
                 return res.status(400).json({
@@ -23,7 +20,7 @@ exports.createOrder = async (req, res) => {
         }
 
         const order = new Order({
-            userId: req.user.id, // Assuming authMiddleware sets req.user
+            userId: req.user.id, 
             items,
             totalAmount,
         });
@@ -42,10 +39,10 @@ exports.createOrder = async (req, res) => {
 
 
 exports.getOrders = async (req, res) => {
-    const userId = req.user.id; // Ensure the user is authenticated
+    const userId = req.user.id; 
 
     try {
-        const orders = await Order.find({ userId }); // Fetch orders for the authenticated user
+        const orders = await Order.find({ userId }); 
         res.status(200).json({ orders });
     } catch (error) {
         console.error('Error fetching orders:', error);
