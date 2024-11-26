@@ -5,12 +5,13 @@ const bcrypt = require('bcryptjs');
 const { generateOTP } = require('../utils/otpUtils.js');
 const nodemailer = require('nodemailer');
 const transporter = nodemailer.createTransport({
-  service: process.env.EMAIL_SERVICE, // e.g., 'gmail'
+  service: process.env.EMAIL_SERVICE, 
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS,
   },
 });
+
 exports.signup = async (req, res) => {
   const { username, email, password, firstName, lastName, phone, role = 'user' } = req.body;
 
@@ -121,10 +122,10 @@ exports.verifyOtp = async (req, res) => {
       process.env.JWT_SECRET,
       { expiresIn: '3h' }
     );
-    res.cookie('authToken', token, {
-      httpOnly: true, // Prevent client-side access to the cookie
-      secure: process.env.NODE_ENV === 'production', // Use HTTPS in production
-      maxAge: 3 * 60 * 60 * 1000, // 3 hours
+    res.cookie('token', token, {
+      httpOnly: true, 
+      secure: process.env.NODE_ENV === 'production', 
+      maxAge: 3 * 60 * 60 * 1000, 
     });
     console.log('Generated token:', token);
     return res.status(200).json({ token, user });
