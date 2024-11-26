@@ -1,6 +1,6 @@
-/* FoodCard.css */
 
-/* General Card Styles */
+@import url('https://fonts.googleapis.com/css2?family=Delius&family=Tangerine:wght@400;700&display=swap');
+
 .food-card {
     width: 300px;
     margin: 15px;
@@ -12,6 +12,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    border: 2px solid #FC819E;
     text-align: center;
 }
 
@@ -20,7 +21,6 @@
     box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
 }
 
-/* Image Styling */
 .food-card-image {
     width: 100%;
     height: 200px;
@@ -32,8 +32,9 @@
     filter: brightness(0.9);
 }
 
-/* Details Section */
+
 .food-card-details {
+    
     padding: 15px;
     flex-grow: 1;
     display: flex;
@@ -42,6 +43,7 @@
 }
 
 .food-card-details h3 {
+    
     font-size: 1.4rem;
     color: #333;
     margin-bottom: 10px;
@@ -54,9 +56,9 @@
     margin-bottom: 15px;
 }
 
-/* Button Styling */
+
 .food-card button {
-    background-color: #ff6f61;
+    background-color:#F7418F;
     color: #fff;
     border: none;
     padding: 10px 15px;
@@ -67,10 +69,10 @@
 }
 
 .food-card button:hover {
-    background-color: #e55c50;
+    background-color: #FC819E;
 }
 
-/* Responsive Design */
+
 @media (max-width: 768px) {
     .food-card {
         width: 100%;
