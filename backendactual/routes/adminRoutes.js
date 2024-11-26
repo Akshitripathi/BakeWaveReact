@@ -15,8 +15,6 @@ const router = express.Router();
 // Admin Signup Route
 router.post('/signup', adminSignup);
 
-// Verify OTP for Signup
-router.post('/signup/verify', verifyAdminSignup);
 
 // Admin Login Route
 router.post('/login', adminLogin);
@@ -25,9 +23,9 @@ router.post('/login', adminLogin);
 router.post('/verifyadminLogin', verifyAdminLogin);
 
 // Fetch All Users (Protected: Admin Only)
-router.get('/users', authenticate, authorizeRole('admin'), getAllUsers);
+router.get('/users', authenticate(['admin']), getAllUsers);
 
 // Delete a User by ID (Protected: Admin Only)
-router.delete('/users/:userId', authenticate, authorizeRole('admin'), deleteUser);
+router.delete('/users/:userId', authenticate(['admin']), deleteUser);
 
 module.exports = router;
