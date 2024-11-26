@@ -14,7 +14,7 @@ import Checkout from './components/Checkout';
 import OrderConfirmation from './components/OrderConfirmation';
 import ProtectedRoute from './ProtectedRoutes'; // Import ProtectedRoute
 import AdminDashboard from './components/AdminDashboard.js'; // Admin dashboard component
-import AdminRoute from './AdminRoute.js'; // AdminRoute component to protect admin routes
+import AdminRoute from './AdminRoutes.js'; // AdminRoute component to protect admin routes
 
 function App() {
   const { user, isLoggedIn } = useContext(AuthContext);
