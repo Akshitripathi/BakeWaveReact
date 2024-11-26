@@ -10,7 +10,7 @@ export default function AboutUs() {
         <div className="layer"></div>
         <img src="../img/bakery p 2.jpg" alt="About Us" />
         <div className="centered">
-          <h1>About Us</h1>
+          <h1 className="heading">About Us</h1>
         </div>
       </div>
 
