@@ -14,7 +14,7 @@ function Profile() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const token = localStorage.getItem('authToken');
+    const token = localStorage.getItem('token');
     if (!token) {
       navigate('/login');
     } else {
@@ -49,7 +49,7 @@ function Profile() {
   }, [navigate]);
 
   const handleAddAddress = () => {
-    const token = localStorage.getItem('authToken');
+    const token = localStorage.getItem('token');
     if (newAddress.trim() && token) {
       axios
         .post(
