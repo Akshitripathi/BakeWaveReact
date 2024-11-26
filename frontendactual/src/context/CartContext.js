@@ -1,50 +1,84 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 
+// Create the Cart Context
 const CartContext = createContext();
 
+// CartProvider Component
 export const CartProvider = ({ children }) => {
-    const [cartItems, setCartItems] = useState(
-        JSON.parse(localStorage.getItem('cartItems')) || []
-    );
+    const [cartItems, setCartItems] = useState(() => {
+        // Load initial cart items from localStorage or default to an empty array
+        return JSON.parse(localStorage.getItem('cartItems')) || [];
+    });
 
-    // Add item to the cart
+    // Sync cart items with localStorage whenever the cart changes
+    useEffect(() => {
+        localStorage.setItem('cartItems', JSON.stringify(cartItems));
+    }, [cartItems]);
+
+    /**
+     * Add an item to the cart.
+     * If the item already exists, increment its quantity.
+     * Otherwise, add the item to the cart with a quantity of 1.
+     */
     const addToCart = (item) => {
         setCartItems((prevItems) => {
             const existingItem = prevItems.find((cartItem) => cartItem._id === item._id);
-    
             if (existingItem) {
-                const updatedCart = prevItems.map((cartItem) =>
+                // Update quantity if item exists
+                return prevItems.map((cartItem) =>
                     cartItem._id === item._id
                         ? { ...cartItem, quantity: cartItem.quantity + 1 }
                         : cartItem
                 );
-                localStorage.setItem('cartItems', JSON.stringify(updatedCart));
-                return updatedCart;
             } else {
-                const updatedCart = [...prevItems, { ...item, quantity: 1 }];
-                localStorage.setItem('cartItems', JSON.stringify(updatedCart));
-                return updatedCart;
+                // Add new item to the cart
+                return [...prevItems, { ...item, quantity: 1 }];
             }
         });
     };
-    
-  
 
-    // Remove item from cart
+    /**
+     * Remove an item from the cart based on its unique `_id`.
+     */
     const removeItemFromCart = (id) => {
-        setCartItems((prevItems) => {
-            const updatedCart = prevItems.filter((item) => item._id !== id); // Use _id here
-            localStorage.setItem('cartItems', JSON.stringify(updatedCart));
-            return updatedCart;
-        });
+        setCartItems((prevItems) => prevItems.filter((item) => item._id !== id));
     };
-    
+
+    /**
+     * Update the quantity of a specific item in the cart.
+     * @param {string} id - The item's unique ID.
+     * @param {number} quantity - The new quantity for the item.
+     */
+    const updateItemQuantity = (id, quantity) => {
+        setCartItems((prevItems) =>
+            prevItems.map((cartItem) =>
+                cartItem._id === id ? { ...cartItem, quantity: quantity } : cartItem
+            )
+        );
+    };
+
+    /**
+     * Clear all items from the cart.
+     */
+    const clearCart = () => {
+        setCartItems([]);
+    };
 
     return (
-        <CartContext.Provider value={{ cartItems, addToCart, removeItemFromCart , setCartItems }}>
+        <CartContext.Provider
+            value={{
+                cartItems,
+                addToCart,
+                removeItemFromCart,
+                updateItemQuantity,
+                clearCart,
+                setCartItems, // Expose `setCartItems` for direct modifications if needed
+            }}
+        >
             {children}
         </CartContext.Provider>
     );
 };
 
+// Custom hook to use the CartContext
 export const useCart = () => useContext(CartContext);
