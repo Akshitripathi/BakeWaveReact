@@ -2,13 +2,15 @@ require('dotenv').config();
 const User = require('../models/User.js');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
-const { generateOTP, isOtpExpired } = require('../utils/otpUtils.js');
-const twilio = require('twilio');
-const accountSid = process.env.TWILIO_ACCOUNT_SID;
-const authToken = process.env.AUTH_TOKEN;
-
-const client = twilio(accountSid, authToken);
-
+const { generateOTP } = require('../utils/otpUtils.js');
+const nodemailer = require('nodemailer');
+const transporter = nodemailer.createTransport({
+  service: process.env.EMAIL_SERVICE, // e.g., 'gmail'
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS,
+  },
+});
 exports.signup = async (req, res) => {
   const { username, email, password, firstName, lastName, phone, role = 'user' } = req.body;
 
@@ -81,12 +83,14 @@ exports.sendOtp = async (req, res) => {
     user.otpExpiry = otpExpiry;
     await user.save();
 
-    const message = `Your OTP for verification is: ${otp}`;
-    await client.messages.create({
-      body: message,
-      from: '+12513104706',
-      to: user.phone,
-    });
+    const mailOptions = {
+      from: process.env.EMAIL_USER,
+      to: email,
+      subject: 'Your OTP for Verification',
+      text: `Your OTP for verification is: ${otp}. It will expire in 5 minutes.`,
+    };
+
+    await transporter.sendMail(mailOptions);
 
     res.status(200).json({ message: 'OTP sent successfully', userId: user._id });
   } catch (error) {
@@ -117,7 +121,11 @@ exports.verifyOtp = async (req, res) => {
       process.env.JWT_SECRET,
       { expiresIn: '3h' }
     );
-
+    res.cookie('authToken', token, {
+      httpOnly: true, // Prevent client-side access to the cookie
+      secure: process.env.NODE_ENV === 'production', // Use HTTPS in production
+      maxAge: 3 * 60 * 60 * 1000, // 3 hours
+    });
     console.log('Generated token:', token);
     return res.status(200).json({ token, user });
   } catch (error) {
@@ -125,3 +133,6 @@ exports.verifyOtp = async (req, res) => {
     return res.status(500).json({ message: 'Internal server error' });
   }
 };
+
+
+
