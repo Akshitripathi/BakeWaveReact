@@ -10,6 +10,17 @@
   font-family: "Poetsen One", sans-serif;
 }
 
+.title{
+  align-items: center;
+  font-family: "Tangerine", cursive;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 4em;
+}
+.right{
+  color: #fff;
+}
+
 .contact-page .container {
   background-image: url('./donutsbg.jpg');
   background-size: cover;
@@ -27,7 +38,7 @@
   background-color: #fff;
   border-radius: 10px;
   box-shadow: 0 0 20px 1px rgba(0, 0, 0, 0.1);
-  opacity: 80%;
+  opacity: 90%;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   margin-top: 20px;
@@ -96,7 +107,7 @@
   padding: 0.6rem 1.3rem;
   background-color:#d05775 ;
   color: #ffffff;
-  border:2px solid #d05775;
+  border:2px solid #fff;
   border-radius: 25px;
   cursor: pointer;
   transition: 0.3s;
@@ -112,4 +123,35 @@
 .contact-page .social-icons a{
     padding-left: 1.5rem;
     color: #d05775;
+}
+
+.message-popup {
+  position: fixed;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #d05775;
+  color: #ffffff;
+  padding: 10px 20px;
+  border-radius: 25px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  font-size: 1rem;
+  font-weight: bold;
+  z-index: 1000;
+  animation: fadeInOut 3s ease-in-out forwards;
+}
+
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-10px);
+  }
+  10%, 90% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-10px);
+  }
 }
