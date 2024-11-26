@@ -2,12 +2,9 @@ import React from 'react';
 import { useAuth } from '../context/AuthContext';
 
 const AdminDashboard = () => {
-  const { logout } = useAuth(); // Access `logout` from the AuthContext
-
-  
-
+  const { logout } = useAuth(); 
   const handleLogout = () => {
-    logout(); // Call the logout function from AuthContext
+    logout(); 
   };
 
   return (
@@ -19,8 +16,6 @@ const AdminDashboard = () => {
     </div>
   );
 };
-
-// Simple inline styling for the logout button
 const logoutButtonStyle = {
   backgroundColor: '#ff4d4d',
   color: '#fff',
