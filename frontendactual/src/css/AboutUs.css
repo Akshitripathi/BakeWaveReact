@@ -2,7 +2,6 @@
 
 
 body {
-    font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
     color: #333;
@@ -160,7 +159,7 @@ body {
   .container.grid-layout {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 2fr)); /* Responsive columns */
-    gap: 100px; /* Spacing between grid items */
+    gap: 100px; 
     padding: 20px;
   }
   
