@@ -1,18 +1,15 @@
-import { useContext } from 'react';
-import { AuthContext } from './context/AuthContext';
+import React from 'react';
 import { Navigate } from 'react-router-dom';
+import { useAuth } from './context/AuthContext';
 
 const AdminRoute = ({ children }) => {
-  const { isLoggedIn, user } = useContext(AuthContext);
-  console.log("Is Logged In:", isLoggedIn);
-  console.log("User:", user);
+  const { isLoggedIn, user } = useAuth();
 
-  // Check if the user is logged in and is an admin
-  if (!isLoggedIn || !user?.isAdmin) {
-    return <Navigate to="/login" />; // Redirect to login if not admin
+  if (!isLoggedIn || user?.role !== 'admin') {
+    return <Navigate to="/login" replace />;
   }
 
-  return children; // Render children (admin dashboard) if admin
+  return children;
 };
 
 export default AdminRoute;
