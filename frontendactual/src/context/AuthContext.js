@@ -4,22 +4,22 @@ import axios from 'axios';
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // State to manage login status
-  const [user, setUser] = useState(null); // State to store user data
+  const [isLoggedIn, setIsLoggedIn] = useState(false); 
+  const [user, setUser] = useState(null); 
 
   useEffect(() => {
     const checkAuthStatus = async () => {
-      const token = localStorage.getItem('token'); // Check for token in localStorage
+      const token = localStorage.getItem('token');
       if (token) {
         try {
           const response = await axios.get('http://localhost:4000/api/auth/status', {
-            headers: { Authorization: `Bearer ${token}` }, // Validate the token
+            headers: { Authorization: `Bearer ${token}` }, 
           });
           if (response.data.isLoggedIn) {
             setUser(response.data.user);
             setIsLoggedIn(true);
           } else {
-            logout(); // Clear state and localStorage on failure
+            logout();
           }
         } catch (error) {
           console.error('Error during auth status check:', error);
@@ -36,13 +36,13 @@ export const AuthProvider = ({ children }) => {
   const login = (token, userData) => {
     localStorage.setItem('token', token);
     setUser(userData);
-    setIsLoggedIn(true); // Set login state to true on successful login
+    setIsLoggedIn(true); 
   };
 
   const logout = () => {
     localStorage.removeItem('token');
     setUser(null);
-    setIsLoggedIn(false); // Set login state to false on logout
+    setIsLoggedIn(false);
   };
 
   return (
