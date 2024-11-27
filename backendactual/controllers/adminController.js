@@ -10,7 +10,7 @@ const transporter = nodemailer.createTransport({
     pass: process.env.EMAIL_PASS,
   },
 });
-const generateOTP = () => Math.floor(100000 + Math.random() * 900000); // 6-digit OTP
+const generateOTP = () => Math.floor(100000 + Math.random() * 900000); // 6-digit ka OTP
 
 const otpStore = {};
 
@@ -129,6 +129,19 @@ exports.deleteUser = async (req, res) => {
   } catch (error) {
     console.error('Error deleting user:', error);
     res.status(500).json({ message: 'Server error while deleting user' });
+  }
+};
+
+exports.getAdminDetails = async (req, res) => {
+  try {
+    const admin = await Admin.findById(req.user.id, 'firstName lastName');
+    if (!admin) {
+      return res.status(404).json({ message: 'Admin not found' });
+    }
+    res.status(200).json({ admin });
+  } catch (error) {
+    console.error('Error fetching admin details:', error);
+    res.status(500).json({ message: 'Server error. Please try again later.' });
   }
 };
 
