@@ -39,7 +39,9 @@ const SideMenu = () => {
       mode="inline"
       style={{
         height: "100%",
+        width: "10rem",
         borderRight: 0,
+        backgroundColor:  "#e67aa1",
       }}
       defaultSelectedKeys={["/"]}
       onClick={({ key }) => navigate(key)} // Navigate to the clicked menu item

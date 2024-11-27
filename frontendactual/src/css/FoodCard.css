@@ -1,6 +1,11 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Delius&family=Tangerine:wght@400;700&display=swap');
 
+*{
+    font-family: "Delius", cursive;
+    font-weight: 400;
+  }
+
 .food-card {
     width: 300px;
     margin: 15px;

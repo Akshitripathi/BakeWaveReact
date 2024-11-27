@@ -1,5 +1,8 @@
 @import '@fortawesome/fontawesome-free/css/all.min.css';
-
+*{
+  font-family: "Delius", cursive;
+  font-weight: 400;
+}
 
 body {
     margin: 0;

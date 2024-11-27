@@ -7,7 +7,7 @@ import {
 import { Card, Space, Statistic, Table, Typography } from "antd";
 import { useEffect, useState } from "react";
 import { getCustomers, getInventory, getOrders, getRevenue } from "../../API";
-
+import './Dashboard1.css';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -35,17 +35,44 @@ function Dashboard() {
   const [revenue, setRevenue] = useState(0);
 
   useEffect(() => {
-    getOrders().then((res) => {
-      setOrders(res.total);
-      setRevenue(res.discountedTotal);
+  getOrders()
+    .then((res) => {
+      console.log("Orders Response:", res);
+      if (res && res.total !== undefined) {
+        setOrders(res.total);
+        setRevenue(res.discountedTotal);
+      }
+    })
+    .catch((err) => {
+      console.error("Failed to fetch orders:", err);
     });
-    getInventory().then((res) => {
-      setInventory(res.total);
-    });
-    getCustomers().then((res) => {
-      setCustomers(res.total);
-    });
+}, []);
+
+  
+  useEffect(() => {
+    getInventory()
+      .then((res) => {
+        if (res && res.total !== undefined) {
+          setInventory(res.total);
+        }
+      })
+      .catch((err) => {
+        console.error("Failed to fetch inventory:", err);
+      });
   }, []);
+  
+  useEffect(() => {
+    getCustomers()
+      .then((res) => {
+        if (res && res.total !== undefined) {
+          setCustomers(res.total);
+        }
+      })
+      .catch((err) => {
+        console.error("Failed to fetch customers:", err);
+      });
+  }, []);
+  
 
   return (
     <Space size={20} direction="vertical">
@@ -114,7 +141,7 @@ function Dashboard() {
       </Space>
       <Space>
         <RecentOrders />
-        <DashboardChart />
+        {/* <DashboardChart /> */}
       </Space>
     </Space>
   );
@@ -168,53 +195,53 @@ function RecentOrders() {
   );
 }
 
-function DashboardChart() {
-  const [reveneuData, setReveneuData] = useState({
-    labels: [],
-    datasets: [],
-  });
+// function DashboardChart() {
+//   const [reveneuData, setReveneuData] = useState({
+//     labels: [],
+//     datasets: [],
+//   });
 
-  useEffect(() => {
-    getRevenue().then((res) => {
-      const labels = res.carts.map((cart) => {
-        return `User-${cart.userId}`;
-      });
-      const data = res.carts.map((cart) => {
-        return cart.discountedTotal;
-      });
+//   useEffect(() => {
+//     getRevenue().then((res) => {
+//       const labels = res.carts.map((cart) => {
+//         return `User-${cart.userId}`;
+//       });
+//       const data = res.carts.map((cart) => {
+//         return cart.discountedTotal;
+//       });
 
-      const dataSource = {
-        labels,
-        datasets: [
-          {
-            label: "Revenue",
-            data: data,
-            backgroundColor: "rgba(255, 0, 0, 1)",
-          },
-        ],
-      };
+//       const dataSource = {
+//         labels,
+//         datasets: [
+//           {
+//             label: "Revenue",
+//             data: data,
+//             backgroundColor: "rgba(255, 0, 0, 1)",
+//           },
+//         ],
+//       };
 
-      setReveneuData(dataSource);
-    });
-  }, []);
+//       setReveneuData(dataSource);
+//     });
+//   }, []);
 
-  const options = {
-    responsive: true,
-    plugins: {
-      legend: {
-        position: "bottom",
-      },
-      title: {
-        display: true,
-        text: "Order Revenue",
-      },
-    },
-  };
+//   const options = {
+//     responsive: true,
+//     plugins: {
+//       legend: {
+//         position: "bottom",
+//       },
+//       title: {
+//         display: true,
+//         text: "Order Revenue",
+//       },
+//     },
+//   };
 
-  return (
-    <Card style={{ width: 500, height: 250 }}>
-      <Bar options={options} data={reveneuData} />
-    </Card>
-  );
-}
+//   return (
+//     <Card style={{ width: 500, height: 250 }}>
+//       <Bar options={options} data={reveneuData} />
+//     </Card>
+//   );
+// }
 export default Dashboard;

@@ -1,0 +1,100 @@
+/* Inventory.css */
+
+/* General Styles */
+.page-title {
+    color: #333;
+    font-weight: 600;
+    text-align: left; /* Adjusted to left-align the title */
+  }
+  
+  /* Card Styles */
+  .inventory-card {
+    background-color: #ffffff;
+    height: 460px;
+    width: 700px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 40px;
+    /* margin-top: 20px; */
+  }
+  
+  /* Table Styles */
+  .custom-table {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .ant-table-thead > tr > th {
+    background-color: #f0f0f0;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .ant-table-tbody > tr > td {
+    background-color: #ffffff;
+    color: #555;
+  }
+  
+  .table-text {
+    font-weight: 500;
+    color: #2c3e50;
+  }
+  
+  .ant-table-pagination {
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  .ant-pagination-prev, .ant-pagination-next {
+    color: #F7418F;
+  }
+  
+  .ant-pagination-item-active {
+    background-color: #F7418F;
+    border-color: #F7418F;
+  }
+  
+  .ant-pagination-item-link {
+    color: #F7418F;
+  }
+  
+  /* Sidebar Styles */
+  .SideMenu {
+    background-color: #fff;
+    padding: 20px;
+    height: 300px; /* Ensures the sidebar fills the screen */
+    box-shadow: 4px 0px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Adjusting Layout Padding */
+  .ant-layout-content {
+    padding: 40px; /* More padding for a spacious layout */
+  }
+  
+  /* Layout */
+  .ant-layout {
+    display: flex;
+    min-height: 100vh;
+  }
+  
+  .ant-layout > .ant-layout-sider {
+    height: 100vh; /* Ensures sidebar fills the height */
+  }
+  
+  .ant-layout > .ant-layout-content {
+    flex: 1; /* Makes content area fill the remaining space */
+    min-height: 100%; /* Ensures content stretches to match sidebar height */
+    background-color: #f7f7f7; /* Light background for content */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adds slight shadow for separation */
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .ant-card {
+    flex-grow: 1; /* Makes sure the card expands within the content */
+    /* margin-top: 20px; */
+  }
+  

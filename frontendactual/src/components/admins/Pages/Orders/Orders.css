@@ -1,0 +1,92 @@
+/* Orders.css */
+
+/* General Styles */
+.page-title {
+    color: #333;
+    font-weight: 600;
+    text-align: left; /* Adjusted to left-align the title */
+  }
+  
+  /* Card Styles */
+  .orders-card {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    padding: 20px;
+    margin-top: 20px;
+    height: 450px;
+    width: 700px;
+  }
+  
+  /* Table Styles */
+  .custom-table {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+  .ant-table-thead > tr > th {
+    background-color: #f0f0f0;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .ant-table-tbody > tr > td {
+    background-color: #ffffff;
+    color: #555;
+  }
+  
+  .table-text {
+    font-weight: 500;
+    color: #2c3e50;
+  }
+  
+  .items-list {
+    padding-left: 0;
+    margin: 0;
+    list-style: none;
+  }
+  
+  .items-list li {
+    font-size: 14px;
+    color: #555;
+  }
+  
+  .items-list li strong {
+    color: #F7418F; /* Green for item names */
+  }
+  
+  .ant-table-pagination {
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  .ant-pagination-prev, .ant-pagination-next {
+    color: #F7418F;
+  }
+  
+  .ant-pagination-item-active {
+    background-color: #F7418F;
+    border-color: #F7418F;
+  }
+
+  
+  
+  .ant-pagination-item-link {
+    color: #F7418F;
+  }
+  
+  /* Sidebar Styles */
+  .SideMenu {
+    background-color: #fff;
+    padding: 20px;
+    height: 100vh; /* Ensures the sidebar fills the screen */
+    box-shadow: 4px 0px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Adjusting Layout Padding */
+  .ant-layout-content {
+    padding: 40px; /* More padding for a spacious layout */
+  }
+  
+  

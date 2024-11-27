@@ -1,3 +1,9 @@
+
+*{
+    font-family: "Delius", cursive;
+    font-weight: 400;
+  }
+
 .cart {
     padding: 20px;
     max-width: 700px; 

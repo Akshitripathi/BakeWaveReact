@@ -1,3 +1,10 @@
+
+
+@import url('https://fonts.googleapis.com/css2?family=Delius&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Delius&family=Tangerine:wght@400;700&display=swap');
+
+
 .App{
     display: flex;
     flex-direction: column;
@@ -5,12 +12,16 @@
     height: 100vh;
 }
 .AppHeader{
-    height: 50px;
+    
+    font-family: "Delius", cursive;
+    font-weight: 400;
+    height: 100px;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
     padding: 4px 20px 4px 12px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 5px;
 }
 .AppFooter{
 height: 50px;
@@ -25,7 +36,7 @@ border-top: 1px solid rgba(0, 0, 0, 0.15);
     flex: 1;
     justify-content: flex-start;
     align-items: flex-start;
-    background-color: rgba(0, 0, 0, 0.05) ;
+    background-color: rgba(202, 133, 133, 0.05) ;
 }
 .SideMenu{
     height: 100%;
@@ -35,4 +46,22 @@ border-top: 1px solid rgba(0, 0, 0, 0.15);
 }
 .PageContent{
     padding-left: 12px;
+}
+
+.logout-btn {
+    position: fixed;
+    top: 26px;
+    right: 15px;
+    padding: 10px 20px;
+    background-color: #f6f3f4; /* Red background */
+    color: rgb(0, 0, 0);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+  
+}
+  
+.logout-btn:hover{
+    background-color: #e67aa1;
 }

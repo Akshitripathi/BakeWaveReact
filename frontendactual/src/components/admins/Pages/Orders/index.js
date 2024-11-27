@@ -1,7 +1,8 @@
-import { Layout, Space, Table, Typography } from "antd";
+import { Layout, Space, Table, Typography, Card } from "antd";
 import axios from 'axios'; // Import axios for API calls
 import { useEffect, useState } from "react";
 import SideMenu from "../../Components/SideMenu"; // Adjust import path if necessary
+import "./Orders.css"; // Import custom CSS for styling
 
 const { Sider, Content } = Layout;
 
@@ -13,7 +14,7 @@ function Orders() {
   useEffect(() => {
     setLoading(true);
     // Make GET request to fetch orders
-    axios.get('/api/orders', { withCredentials: true })
+    axios.get('http://localhost:4000/api/orders', { withCredentials: true })
       .then((res) => {
         const orders = res.data.orders.map(order => ({
           key: order._id, // Use _id as the key
@@ -34,15 +35,16 @@ function Orders() {
     {
       title: "User ID",
       dataIndex: "userId",
+      render: (userId) => <span className="table-text">{userId}</span>,
     },
     {
       title: "Items",
       dataIndex: "items",
       render: (items) => (
-        <ul>
+        <ul className="items-list">
           {items.map((item, index) => (
             <li key={index}>
-              <strong>{item.name}</strong> - {item.quantity} x ${item.price}
+              <strong>{item.name}</strong> - {item.quantity} x ₹{item.price}
             </li>
           ))}
         </ul>
@@ -51,37 +53,46 @@ function Orders() {
     {
       title: "Total Amount",
       dataIndex: "totalAmount",
-      render: (value) => <span>${value}</span>,
+      render: (value) => <span className="table-text">₹{value}</span>,
     },
   ];
 
   return (
-    <Layout>
+    <Layout style={{ minHeight: "100vh" }}>
       {/* Sidebar */}
-      <Sider width={240} className="SideMenu">
+      <Sider width={200} className="SideMenu" style={{ height: "120vh" }}>
         <SideMenu />
       </Sider>
 
       {/* Main Content */}
-      <Layout style={{ padding: "0 24px 24px" }}>
+      <Layout style={{ padding: "0 24px 24px", flex: 1 }}>
         <Content
           style={{
-            padding: 24,
+            padding: 40,
             margin: 0,
-            minHeight: 280,
+            minHeight: "100vh",
+            backgroundColor: "#f7f7f7",
+            borderRadius: "8px",
+            boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
           }}
         >
-          <Space size={20} direction="vertical">
-            <Typography.Title level={4}>Orders</Typography.Title>
-            <Table
-              loading={loading}
-              columns={columns}
-              dataSource={dataSource}
-              rowKey="key" // Unique key for rows (using _id as 'key')
-              pagination={{
-                pageSize: 5,
-              }}
-            />
+          <Space size={20} direction="vertical" style={{ width: "100%" }}>
+            <Typography.Title level={3} className="page-title">
+              Orders
+            </Typography.Title>
+            <Card className="orders-card">
+              <Table
+                loading={loading}
+                columns={columns}
+                dataSource={dataSource}
+                rowKey="key" // Unique key for rows (using _id as 'key')
+                pagination={{
+                  pageSize: 5,
+                  showSizeChanger: false,
+                }}
+                className="custom-table"
+              />
+            </Card>
           </Space>
         </Content>
       </Layout>

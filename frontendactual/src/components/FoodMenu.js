@@ -33,7 +33,7 @@ export default function FoodMenu() {
             <Navbar /> 
             <h1>Menu</h1>
             <div className="categories">
-                {['all', 'Special', 'Pâtisserie', 'Gâteaux', 'Tartes', 'Viennoiseries', 'Others'].map(cat => (
+                {['All','Breads', 'Cakes', 'Pastries', 'Cookies', 'Muffins', 'Pies'].map(cat => (
                     <button
                         key={cat}
                         onClick={() => setCategory(cat.toLowerCase())}

@@ -24,6 +24,13 @@ const Signup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const emailRegex = /^[a-zA-Z][a-zA-Z0-9._%+-]*@gmail\.com$/;
+    if (!emailRegex.test(formData.email)) {
+      setError('Please enter a valid email address that starts with a letter and ends with @gmail.com.');
+      return;
+    }
+
     try {
       // Determine the API endpoint based on the role
       const endpoint = formData.role === 'admin'

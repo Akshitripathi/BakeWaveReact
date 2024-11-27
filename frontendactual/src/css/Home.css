@@ -5,11 +5,10 @@
 *{
     padding: 0%;
     margin: 0%;
-    font-family: "Poetsen One", sans-serif;
-    font-weight: 300;
-    font-style: normal;
+    
+  font-family: "Delius", cursive;
+  font-weight: 400;
 }
-  
   body {
     background-color: #f7f7f7;
     color: #333;

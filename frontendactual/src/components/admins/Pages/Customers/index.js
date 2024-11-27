@@ -13,7 +13,11 @@ function Customers() {
     setLoading(true);
     getCustomers()
       .then((res) => {
-        setDataSource(res.users);
+        if (res && res.users) {
+          setDataSource(res.users);
+        } else {
+          console.error("No users found in response:", res);
+        }
       })
       .catch((err) => {
         console.error("Failed to fetch customers:", err);
@@ -22,6 +26,9 @@ function Customers() {
         setLoading(false);
       });
   }, []);
+  
+  
+  
 
   return (
     <Layout>
@@ -39,37 +46,38 @@ function Customers() {
           <Space size={20} direction="vertical">
             <Typography.Title level={4}>Customers</Typography.Title>
             <Table
-              loading={loading}
-              columns={[
-                {
-                  title: "Photo",
-                  dataIndex: "image",
-                  render: (link) => <Avatar src={link} />,
-                },
-                {
-                  title: "First Name",
-                  dataIndex: "firstName",
-                },
-                {
-                  title: "Last Name",
-                  dataIndex: "lastName",
-                },
-                {
-                  title: "Email",
-                  dataIndex: "email",
-                },
-                {
-                  title: "Phone",
-                  dataIndex: "phone",
-                },
-                {
-                  title: "Address",
-                  dataIndex: "address",
-                },
-              ]}
-              dataSource={dataSource}
-              rowKey="id"
-            />
+  loading={loading}
+  columns={[
+    {
+      title: "Photo",
+      dataIndex: "image",
+      render: (link) => <Avatar src={link} />,
+    },
+    {
+      title: "First Name",
+      dataIndex: "firstName",
+    },
+    {
+      title: "Last Name",
+      dataIndex: "lastName",
+    },
+    {
+      title: "Email",
+      dataIndex: "email",
+    },
+    {
+      title: "Phone",
+      dataIndex: "phone",
+    },
+    {
+      title: "Address",
+      dataIndex: "address",
+    },
+  ]}
+  dataSource={dataSource}
+  rowKey="_id" // Ensure _id is used as the key
+/>
+
           </Space>
         </Content>
       </Layout>
